@@ -24,7 +24,10 @@ public class PlayerController : MonoBehaviour
     float XZmag;
 
     public InputActionReference fireAction;
+    public GameObject bulletPrefab;
+    public Transform bulletPoint;
     bool isFiring = false;
+    float timeToFire = 0f;
 
     public InputActionReference jumpAction;
     bool isJumping = false;
@@ -58,6 +61,12 @@ public class PlayerController : MonoBehaviour
         jumpAction.action.performed += _ => { isJumping = true; };
         jumpAction.action.canceled += _ => { isJumping = false; };
 
+        if (isFiring && Time.time >= timeToFire)
+        {
+            timeToFire = Time.time + 1f / bulletPrefab.GetComponent<Bullet>().fireRate;
+            SpawnBullet();
+        }
+
         if (Physics.Raycast(transform.position, -transform.up, out hit, 1.05f, groundLayer))
         {
             grounded = true;
@@ -71,7 +80,6 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         var velocity = rb.velocity;
-
         
         XZmag = new Vector3(velocity.x, 0, velocity.z).magnitude;
 
@@ -137,6 +145,16 @@ public class PlayerController : MonoBehaviour
 
         rb.velocity = velocity;
     }
+
+
+    void SpawnBullet()
+    {
+        if (bulletPoint != null)
+        {
+            Instantiate(bulletPrefab, bulletPoint.transform.position, bulletPoint.transform.rotation);
+        }
+    }
+
 
     void OnMove(InputValue input)
     {

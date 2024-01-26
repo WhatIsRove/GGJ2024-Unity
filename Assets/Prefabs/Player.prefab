@@ -45,11 +45,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1e52a92b73f7f478d79432d7d2c5f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bobIntensity: 0.2
+  bobIntensity: 0.04
   bobIntensityX: 1
-  bobSpeed: 4
+  bobSpeed: 9
   targetTransform: {fileID: 2667169108157827761}
   offset: {x: 0, y: -0.25, z: 0}
+--- !u!1 &1165180928949785785
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8815693023010714740}
+  m_Layer: 0
+  m_Name: BulletPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8815693023010714740
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165180928949785785}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6666766992840157513}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2958622615396629964
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,7 +249,8 @@ Transform:
   m_LocalPosition: {x: 0.5, y: -0.12, z: 0.5}
   m_LocalScale: {x: 0.2567212, y: 0.30405346, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8815693023010714740}
   m_Father: {fileID: 1187817424832961540}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6357261612386243814
@@ -288,7 +320,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -359,7 +391,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4b157635eb1cdb54294ec2dcff6c9ce0, type: 2}
+  - {fileID: 2100000, guid: cab4bfe8667e0e8449ddf14d5fd837fb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -422,6 +454,8 @@ MonoBehaviour:
   mouseVerticalRange: {x: -90, y: 90}
   moveDir: {x: 0, y: 0, z: 0}
   fireAction: {fileID: -1880954636124108693, guid: 17ff296f46357764ab77b68e54f6be94, type: 3}
+  bulletPrefab: {fileID: 3541665366582384041, guid: 58b9ee21d045e164f9dd65fb553f285f, type: 3}
+  bulletPoint: {fileID: 8815693023010714740}
   jumpAction: {fileID: 5047135449454234650, guid: 17ff296f46357764ab77b68e54f6be94, type: 3}
   jumpForce: 1
   gravity: 3.72
