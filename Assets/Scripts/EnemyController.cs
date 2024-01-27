@@ -120,9 +120,10 @@ public class EnemyController : MonoBehaviour
 
     void CheckPlayerDistance()
     {
-        if (Vector3.Distance(transform.position, player.position) < attackRange)
+        if (Vector3.Distance(transform.position, player.position) < attackRange+1)
         {
-            // player take dmg
+            FindObjectOfType<PlayerController>().TakeDamage();
+            FindObjectOfType<AudioManager>().Play("Honk");
         }
     }
 
@@ -148,7 +149,7 @@ public class EnemyController : MonoBehaviour
             indicator.sprite = happy;
             GetComponent<SpriteRenderer>().sprite = happySprite;
             agent.velocity = Vector3.zero;
-            agent.Stop();
+            agent.isStopped = true;
 
             dead = true;
             Destroy(hand);

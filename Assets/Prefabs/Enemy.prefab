@@ -306,7 +306,7 @@ MonoBehaviour:
   walkDestin: {x: 0, y: 0, z: 0}
   walkPointRange: 5
   timeBetweenAttacks: 1
-  timeToHit: 0
+  timeToHit: 0.75
   sightRange: 50
   attackRange: 2
   playerInSightRange: 0

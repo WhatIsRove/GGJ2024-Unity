@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -54,6 +55,13 @@ public class PlayerController : MonoBehaviour
     GameObject gunCrosshair;
     GameObject chickenCrosshair;
 
+    public float maxHP;
+    float currentHP;
+    public RectMask2D hpMask;
+
+    float maxRightMask;
+    float initialRightMask;
+
     void Start()
     {
         camera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -64,6 +72,10 @@ public class PlayerController : MonoBehaviour
         chickenCrosshair = GameObject.FindGameObjectWithTag("ChickenCrosshair");
 
         chickenCrosshair.SetActive(false);
+        currentHP = maxHP;
+
+        maxRightMask = hpMask.rectTransform.rect.width - hpMask.padding.x - hpMask.padding.z;
+        initialRightMask = hpMask.padding.z;
     }
 
     void Update()
@@ -134,6 +146,8 @@ public class PlayerController : MonoBehaviour
         {
             grounded = false;
         }
+
+        ManageHealthBar();
     }
 
     void FixedUpdate()
@@ -237,6 +251,29 @@ public class PlayerController : MonoBehaviour
 
         nadeRB.AddForce(aimDir * throwForce + transform.up * throwForceUp, ForceMode.Impulse);
 
+    }
+
+    private void ManageHealthBar()
+    {
+        var targetWidth = currentHP * (maxRightMask / maxHP);
+        var newRightMask = maxRightMask + initialRightMask - targetWidth;
+        var padding = hpMask.padding;
+
+        padding.z = newRightMask;
+        hpMask.padding = padding;
+    }
+
+    public void TakeDamage()
+    {
+        if (currentHP > 0)
+        {
+            currentHP--;
+        }
+
+        if (currentHP <= 0)
+        {
+            //gameover
+        }
     }
 
 
