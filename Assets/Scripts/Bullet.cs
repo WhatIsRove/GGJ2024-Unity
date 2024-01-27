@@ -1,12 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Bullet : MonoBehaviour
 {
     public float speed;
     public float accuracy;
     public float fireRate;
+    public float damageAmount;
+    public float explosionRadius;
 
     public GameObject muzzlePrefab;
     public GameObject hitPrefab;
@@ -62,7 +66,7 @@ public class Bullet : MonoBehaviour
         if (speed != 0 && rb != null) rb.position += (transform.forward + offset) * (speed * Time.deltaTime);
     }
 
-    void OnCollisionEnter(Collision co)
+    void OnTriggerEnter(Collider co)
     {
         if (co.gameObject.tag != "Bullet" && !collided)
         {
@@ -71,13 +75,23 @@ public class Bullet : MonoBehaviour
             speed = 0;
             GetComponent<Rigidbody>().isKinematic = true;
 
-            ContactPoint contact = co.contacts[0];
-            Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
-            Vector3 pos = contact.point;
+            Collider[] objectsInRange = Physics.OverlapSphere(transform.position, explosionRadius);
+
+            foreach (Collider obj in objectsInRange)
+            {
+                if (obj.gameObject.GetComponent<EnemyController>() != null)
+                {
+                    var enemy = obj.gameObject.GetComponent<EnemyController>();
+                    enemy.TakeDamage(damageAmount);
+                }
+            }
+
+            var contact = co.ClosestPointOnBounds(transform.position);
+            Quaternion rot = Quaternion.FromToRotation(Vector3.up, transform.position - contact);
 
             if (hitPrefab != null)
             {
-                var hitVFX = Instantiate(hitPrefab, pos, rot) as GameObject;
+                var hitVFX = Instantiate(hitPrefab, contact, rot) as GameObject;
 
                 var ps = hitVFX.GetComponent<ParticleSystem>();
                 if (ps == null)

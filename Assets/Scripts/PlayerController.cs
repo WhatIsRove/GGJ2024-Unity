@@ -225,7 +225,7 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(camera.transform.position, camera.transform.forward, out camHit, 500f))
         {
-            aimDir = (camHit.point - bulletPoint.position).normalized;
+            if (camHit.collider.tag != "Bullet") aimDir = (camHit.point - bulletPoint.position).normalized;
         }
 
         Instantiate(bulletPrefab, bulletPoint.position, Quaternion.LookRotation(aimDir));

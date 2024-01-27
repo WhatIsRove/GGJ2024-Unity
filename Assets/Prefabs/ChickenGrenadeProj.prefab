@@ -245,9 +245,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4078acf98724e24686b8f9946a80c8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 20
+  fireRate: 50
   explosionRadius: 0
-  timeTillExplode: 1.75
+  timeTillExplode: 1
   explosionVFX: {fileID: 5348146972015819410, guid: 693e0088ac001b946bf6249b20e94cc8, type: 3}
   timeTillEffectDispersed: 2
 --- !u!135 &8363139528365259849

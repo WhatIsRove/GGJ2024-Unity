@@ -659,7 +659,7 @@ GameObject:
   - component: {fileID: 6260095733612767971}
   - component: {fileID: 5732346502437088559}
   - component: {fileID: 1989509444650722222}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -775,7 +775,6 @@ MonoBehaviour:
   moveDir: {x: 0, y: 0, z: 0}
   bulletPrefab: {fileID: 8158372179603329983, guid: 3b9363da5b37e7f4f847c66aa7c2fdf1, type: 3}
   bulletPoint: {fileID: 8815693023010714740}
-  muzzlePrefab: {fileID: 1690790444803418605, guid: e8c800ca7c9d1ba4ba5193acc5c4be2d, type: 3}
   nadePrefab: {fileID: 3110145984358713517, guid: fb9344d3b13cdb74ba69b6b498d6c4ad, type: 3}
   nadePoint: {fileID: 1595787332870982236}
   throwForce: 10

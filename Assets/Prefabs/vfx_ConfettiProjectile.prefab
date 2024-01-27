@@ -923,7 +923,7 @@ ParticleSystem:
     rateOverDistance:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 2
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -5753,7 +5753,7 @@ ParticleSystem:
     rateOverDistance:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 30
+      scalar: 7
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -6139,7 +6139,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 0}
-        key1: {r: 0, g: 0, b: 0, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -14562,7 +14562,7 @@ GameObject:
   - component: {fileID: 7301364957242192623}
   m_Layer: 0
   m_Name: vfx_ConfettiProjectile
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14599,7 +14599,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 35
   accuracy: 100
-  fireRate: 50
+  fireRate: 10
+  damageAmount: 15
+  explosionRadius: 2.5
   muzzlePrefab: {fileID: 1690790444803418605, guid: e8c800ca7c9d1ba4ba5193acc5c4be2d, type: 3}
   hitPrefab: {fileID: 5213056845528631209, guid: ffe69f5779796fb4088f093193bb32e1, type: 3}
 --- !u!54 &-7021322281116824046
@@ -14644,7 +14646,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
