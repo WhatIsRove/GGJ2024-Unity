@@ -38,6 +38,12 @@ public class PlayerController : MonoBehaviour
     RaycastHit hit;
     public bool grounded;
 
+    public InputActionReference[] hotbar;
+    int hotbarIndex = 1;
+    int prevHotbarIndex = 2;
+    public GameObject gun;
+    public GameObject chicken;
+
     void Start()
     {
         camera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -60,6 +66,29 @@ public class PlayerController : MonoBehaviour
 
         jumpAction.action.performed += _ => { isJumping = true; };
         jumpAction.action.canceled += _ => { isJumping = false; };
+
+        hotbar[0].action.performed += _ => {
+            int tempIndex = hotbarIndex;
+            hotbarIndex = prevHotbarIndex;
+            prevHotbarIndex = tempIndex;
+            SwitchHotbar();
+        };
+
+        hotbar[1].action.performed += _ => { 
+            if (hotbarIndex != 1) {
+                prevHotbarIndex = hotbarIndex;
+                hotbarIndex = 1;
+                SwitchHotbar();
+            }
+        };
+        hotbar[2].action.performed += _ => {
+            if (hotbarIndex != 2)
+            {
+                prevHotbarIndex = hotbarIndex;
+                hotbarIndex = 2;
+                SwitchHotbar();
+            }
+        };
 
         if (isFiring && Time.time >= timeToFire)
         {
@@ -118,8 +147,6 @@ public class PlayerController : MonoBehaviour
 
         if (grounded)
         {
-            //velocity.y = -2f;
-
             var keepX = localVelocity.x;
             var keepZ = localVelocity.z;
 
@@ -144,6 +171,21 @@ public class PlayerController : MonoBehaviour
         velocity = transform.TransformDirection(localVelocity);
 
         rb.velocity = velocity;
+    }
+
+    void SwitchHotbar()
+    {
+        switch (hotbarIndex)
+        {
+            case 1:
+                gun.SetActive(true);
+                chicken.SetActive(false);
+                break;
+            case 2:
+                gun.SetActive(false);
+                chicken.SetActive(true);
+                break;
+        }
     }
 
 
