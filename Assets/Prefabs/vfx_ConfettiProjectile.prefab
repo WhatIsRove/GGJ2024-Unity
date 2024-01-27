@@ -751,7 +751,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.3
+      value: 0.24
       mode: 0
       spread: 0
       speed:
@@ -10411,7 +10411,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.3
+      value: 0.2
       mode: 0
       spread: 0
       speed:
@@ -14597,9 +14597,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b23d1aff20305741a3f74b9008fa223, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 35
+  speed: 22
   accuracy: 100
-  fireRate: 10
+  fireRate: 1.25
   damageAmount: 15
   explosionRadius: 2.5
   muzzlePrefab: {fileID: 1690790444803418605, guid: e8c800ca7c9d1ba4ba5193acc5c4be2d, type: 3}
@@ -14941,7 +14941,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.3
+      scalar: 0.2
       minScalar: 1
       maxCurve:
         serializedVersion: 2

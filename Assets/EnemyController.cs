@@ -23,7 +23,7 @@ public class EnemyController : MonoBehaviour
     public bool playerInSightRange, playerInAttackRange;
 
     public float maxHealth;
-    float currentHealth;
+    public float currentHealth;
 
     private void Awake()
     {
