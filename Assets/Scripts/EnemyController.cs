@@ -17,6 +17,7 @@ public class EnemyController : MonoBehaviour
     public float walkPointRange;
 
     public float timeBetweenAttacks;
+    public float timeToHit;
     bool alreadyAttacked;
 
     public float sightRange, attackRange;
@@ -25,15 +26,32 @@ public class EnemyController : MonoBehaviour
     public float maxHealth;
     public float currentHealth;
 
+    public GameObject leftHP;
+    public GameObject rightHP;
+
+    Animator anim;
+
+    public Sprite happy;
+    public Sprite happySprite;
+    public SpriteRenderer indicator;
+
+    bool dead = false;
+
+    public GameObject hand;
+
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+
+        anim = GetComponent<Animator>();
     }
 
     private void Start()
     {
         currentHealth = maxHealth;
+        rightHP.SetActive(false);
+        leftHP.transform.localScale = new Vector3(1, 1, 1);
     }
 
     void Update()
@@ -41,9 +59,12 @@ public class EnemyController : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
 
-        if (!playerInSightRange && !playerInAttackRange) Patrolling();
-        if (playerInSightRange && !playerInAttackRange) FollowPlayer();
-        if (playerInAttackRange) AttackPlayer();
+        if (!playerInSightRange && !playerInAttackRange && !dead) Patrolling();
+        if (playerInSightRange && !playerInAttackRange && !dead) FollowPlayer();
+        if (playerInAttackRange && !dead) AttackPlayer();
+
+        if (currentHealth != maxHealth) rightHP.SetActive(true);
+        if (currentHealth <= 0) leftHP.SetActive(false);
     }
 
     void Patrolling()
@@ -90,7 +111,18 @@ public class EnemyController : MonoBehaviour
         if (!alreadyAttacked)
         {
             alreadyAttacked = true;
+
+            anim.SetTrigger("Attack");
+            Invoke(nameof(CheckPlayerDistance), timeToHit);
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }
+    }
+
+    void CheckPlayerDistance()
+    {
+        if (Vector3.Distance(transform.position, player.position) < attackRange)
+        {
+            // player take dmg
         }
     }
 
@@ -101,9 +133,26 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        currentHealth -= amount;
+        if (currentHealth > 0)
+        {
+            if (currentHealth - amount < 0)
+            {
+                currentHealth = 0;
+            } else currentHealth -= amount;
+        }
+            
+        leftHP.transform.localScale = new Vector3(currentHealth/maxHealth, 1, 1);
+        rightHP.transform.localScale = new Vector3(1-currentHealth/maxHealth, 1, 1);
         if (currentHealth <= 0) {
-            Destroy(gameObject);
+            currentHealth = 0;
+            indicator.sprite = happy;
+            GetComponent<SpriteRenderer>().sprite = happySprite;
+            agent.velocity = Vector3.zero;
+            agent.Stop();
+
+            dead = true;
+            Destroy(hand);
+            //Destroy(gameObject);
         }
     }
 }

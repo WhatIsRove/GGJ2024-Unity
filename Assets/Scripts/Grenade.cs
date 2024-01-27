@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.ProBuilder.MeshOperations;
 
@@ -32,7 +33,15 @@ public class Grenade : MonoBehaviour
             if (obj.gameObject.GetComponent<EnemyController>() != null)
             {
                 var enemy = obj.gameObject.GetComponent<EnemyController>();
-                enemy.TakeDamage(damageAmount / (Vector3.Distance(obj.transform.position, transform.position)/2));
+                var distance = (Vector3.Distance(obj.transform.position, transform.position) / 2);
+                if (distance > 1)
+                {
+                    enemy.TakeDamage(damageAmount / distance);
+                } else
+                {
+                    enemy.TakeDamage(damageAmount);
+                }
+                
             }
         }
 

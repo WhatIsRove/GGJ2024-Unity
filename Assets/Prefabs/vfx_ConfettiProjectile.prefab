@@ -14598,7 +14598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 22
-  accuracy: 100
+  accuracy: 99
   fireRate: 1.25
   damageAmount: 15
   explosionRadius: 2.5

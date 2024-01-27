@@ -51,11 +51,19 @@ public class PlayerController : MonoBehaviour
     public GameObject gun;
     public GameObject chicken;
 
+    GameObject gunCrosshair;
+    GameObject chickenCrosshair;
+
     void Start()
     {
         camera = GameObject.FindGameObjectWithTag("MainCamera");
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
+
+        gunCrosshair = GameObject.FindGameObjectWithTag("CannonCrosshair");
+        chickenCrosshair = GameObject.FindGameObjectWithTag("ChickenCrosshair");
+
+        chickenCrosshair.SetActive(false);
     }
 
     void Update()
@@ -97,15 +105,22 @@ public class PlayerController : MonoBehaviour
             }
         };
 
+        if (hotbarIndex == 2 && Time.time >= timeToFire - 0.1f)
+        {
+            chicken.SetActive(true);
+        }
+
         if (isFiring && Time.time >= timeToFire)
         {
             if (hotbarIndex == 1)
             {
                 timeToFire = Time.time + 1f / bulletPrefab.GetComponent<Bullet>().fireRate;
                 SpawnBullet();
+                FindObjectOfType<AudioManager>().Play("ConfettiCannon");
             } else if (hotbarIndex == 2)
             {
                 timeToFire = Time.time + 1f / nadePrefab.GetComponent<Grenade>().fireRate;
+                chicken.SetActive(false);
                 ThrowNade();
             }
             
@@ -195,10 +210,16 @@ public class PlayerController : MonoBehaviour
             case 1:
                 gun.SetActive(true);
                 chicken.SetActive(false);
+
+                gunCrosshair.SetActive(true);
+                chickenCrosshair.SetActive(false);
                 break;
             case 2:
                 gun.SetActive(false);
                 chicken.SetActive(true);
+
+                gunCrosshair.SetActive(false);
+                chickenCrosshair.SetActive(true);
                 break;
         }
     }
