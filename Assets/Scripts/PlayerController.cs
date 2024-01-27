@@ -23,9 +23,15 @@ public class PlayerController : MonoBehaviour
 
     float XZmag;
 
-    public InputActionReference fireAction;
     public GameObject bulletPrefab;
     public Transform bulletPoint;
+
+    public GameObject nadePrefab;
+    public Transform nadePoint;
+    public float throwForce = 10f;
+    public float throwForceUp = 15f;
+
+    public InputActionReference fireAction;
     bool isFiring = false;
     float timeToFire = 0f;
 
@@ -93,8 +99,16 @@ public class PlayerController : MonoBehaviour
 
         if (isFiring && Time.time >= timeToFire)
         {
-            timeToFire = Time.time + 1f / bulletPrefab.GetComponent<Bullet>().fireRate;
-            SpawnBullet();
+            if (hotbarIndex == 1)
+            {
+                timeToFire = Time.time + 1f / bulletPrefab.GetComponent<Bullet>().fireRate;
+                SpawnBullet();
+            } else if (hotbarIndex == 2)
+            {
+                timeToFire = Time.time + 1f / nadePrefab.GetComponent<Grenade>().fireRate;
+                ThrowNade();
+            }
+            
         }
 
         if (Physics.Raycast(transform.position, -transform.up, out groundHit, 1.05f, groundLayer))
@@ -191,6 +205,16 @@ public class PlayerController : MonoBehaviour
 
     void ThrowNade()
     {
+        Vector3 aimDir = camera.transform.forward;
+        GameObject nade = Instantiate(nadePrefab, nadePoint.position, camera.transform.rotation);
+        Rigidbody nadeRB = nade.GetComponent<Rigidbody>();
+
+        if (Physics.Raycast(camera.transform.position, camera.transform.forward, out camHit, 500f))
+        {
+            aimDir = (camHit.point - bulletPoint.position).normalized;
+        }
+
+        nadeRB.AddForce(aimDir * throwForce + transform.up * throwForceUp, ForceMode.Impulse);
 
     }
 
@@ -204,10 +228,7 @@ public class PlayerController : MonoBehaviour
             aimDir = (camHit.point - bulletPoint.position).normalized;
         }
 
-        if (bulletPoint != null)
-        {
-            Instantiate(bulletPrefab, bulletPoint.transform.position, Quaternion.LookRotation(aimDir));
-        }
+        Instantiate(bulletPrefab, bulletPoint.transform.position, Quaternion.LookRotation(aimDir));
     }
 
 

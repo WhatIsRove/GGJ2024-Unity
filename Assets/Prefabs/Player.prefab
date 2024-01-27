@@ -493,6 +493,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &4180951243796101376
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1595787332870982236}
+  m_Layer: 0
+  m_Name: NadePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1595787332870982236
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4180951243796101376}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9058462572315868931}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6622064025415197659
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,6 +641,7 @@ Transform:
   - {fileID: 5005912460660146005}
   - {fileID: 98197162648605110}
   - {fileID: 9113680762545928822}
+  - {fileID: 1595787332870982236}
   m_Father: {fileID: 1187817424832961540}
   m_LocalEulerAnglesHint: {x: 2.005, y: 48.027, z: 44.614}
 --- !u!1 &6779950618989346792
@@ -741,9 +773,11 @@ MonoBehaviour:
   mouseSensitivity: 0.1
   mouseVerticalRange: {x: -90, y: 90}
   moveDir: {x: 0, y: 0, z: 0}
-  fireAction: {fileID: -1880954636124108693, guid: 17ff296f46357764ab77b68e54f6be94, type: 3}
   bulletPrefab: {fileID: 3541665366582384041, guid: 58b9ee21d045e164f9dd65fb553f285f, type: 3}
   bulletPoint: {fileID: 8815693023010714740}
+  nadePrefab: {fileID: 3110145984358713517, guid: fb9344d3b13cdb74ba69b6b498d6c4ad, type: 3}
+  nadePoint: {fileID: 1595787332870982236}
+  fireAction: {fileID: -1880954636124108693, guid: 17ff296f46357764ab77b68e54f6be94, type: 3}
   jumpAction: {fileID: 5047135449454234650, guid: 17ff296f46357764ab77b68e54f6be94, type: 3}
   jumpForce: 1
   gravity: 3.72
