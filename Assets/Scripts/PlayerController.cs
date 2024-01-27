@@ -35,7 +35,8 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 10f;
     public float gravity;
     public LayerMask groundLayer;
-    RaycastHit hit;
+    RaycastHit groundHit;
+    RaycastHit camHit;
     public bool grounded;
 
     public InputActionReference[] hotbar;
@@ -96,7 +97,7 @@ public class PlayerController : MonoBehaviour
             SpawnBullet();
         }
 
-        if (Physics.Raycast(transform.position, -transform.up, out hit, 1.05f, groundLayer))
+        if (Physics.Raycast(transform.position, -transform.up, out groundHit, 1.05f, groundLayer))
         {
             grounded = true;
         }
@@ -162,7 +163,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             localVelocity.y -= gravity * Time.fixedDeltaTime * 10;
-            if (Physics.Raycast(transform.position, -transform.up, out hit, 1.06f, groundLayer))
+            if (Physics.Raycast(transform.position, -transform.up, out groundHit, 1.06f, groundLayer))
             {
                 localVelocity.y /= gravity;
             }
@@ -188,12 +189,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void ThrowNade()
+    {
+
+    }
+
 
     void SpawnBullet()
     {
+        Vector3 aimDir = camera.transform.forward;
+
+        if (Physics.Raycast(camera.transform.position, camera.transform.forward, out camHit, 500f))
+        {
+            aimDir = (camHit.point - bulletPoint.position).normalized;
+        }
+
         if (bulletPoint != null)
         {
-            Instantiate(bulletPrefab, bulletPoint.transform.position, bulletPoint.transform.rotation);
+            Instantiate(bulletPrefab, bulletPoint.transform.position, Quaternion.LookRotation(aimDir));
         }
     }
 
