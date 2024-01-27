@@ -861,6 +861,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6260095733612767971, guid: ad9a2b552c98fb448a0dd37ec6bf72d3, type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 8158372179603329983, guid: 3b9363da5b37e7f4f847c66aa7c2fdf1, type: 3}
+    - target: {fileID: 6260095733612767971, guid: ad9a2b552c98fb448a0dd37ec6bf72d3, type: 3}
       propertyPath: throwForceUp
       value: 3
       objectReference: {fileID: 0}
