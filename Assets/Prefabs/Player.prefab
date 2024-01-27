@@ -773,10 +773,13 @@ MonoBehaviour:
   mouseSensitivity: 0.1
   mouseVerticalRange: {x: -90, y: 90}
   moveDir: {x: 0, y: 0, z: 0}
-  bulletPrefab: {fileID: 3541665366582384041, guid: 58b9ee21d045e164f9dd65fb553f285f, type: 3}
+  bulletPrefab: {fileID: 8158372179603329983, guid: 3b9363da5b37e7f4f847c66aa7c2fdf1, type: 3}
   bulletPoint: {fileID: 8815693023010714740}
+  muzzlePrefab: {fileID: 1690790444803418605, guid: e8c800ca7c9d1ba4ba5193acc5c4be2d, type: 3}
   nadePrefab: {fileID: 3110145984358713517, guid: fb9344d3b13cdb74ba69b6b498d6c4ad, type: 3}
   nadePoint: {fileID: 1595787332870982236}
+  throwForce: 10
+  throwForceUp: 3
   fireAction: {fileID: -1880954636124108693, guid: 17ff296f46357764ab77b68e54f6be94, type: 3}
   jumpAction: {fileID: 5047135449454234650, guid: 17ff296f46357764ab77b68e54f6be94, type: 3}
   jumpForce: 1

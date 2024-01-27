@@ -228,7 +228,7 @@ public class PlayerController : MonoBehaviour
             aimDir = (camHit.point - bulletPoint.position).normalized;
         }
 
-        Instantiate(bulletPrefab, bulletPoint.transform.position, Quaternion.LookRotation(aimDir));
+        Instantiate(bulletPrefab, bulletPoint.position, Quaternion.LookRotation(aimDir));
     }
 
 
