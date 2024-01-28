@@ -39,6 +39,9 @@ public class EnemyController : MonoBehaviour
 
     public GameObject hand;
 
+    public bool isRanged;
+    public GameObject bulletPrefab;
+
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -111,9 +114,16 @@ public class EnemyController : MonoBehaviour
         if (!alreadyAttacked)
         {
             alreadyAttacked = true;
-
-            anim.SetTrigger("Attack");
-            Invoke(nameof(CheckPlayerDistance), timeToHit);
+            if (!isRanged)
+            {
+                anim.SetTrigger("Attack");
+                Invoke(nameof(CheckPlayerDistance), timeToHit);
+            } else
+            {
+                var aimDir = (player.position - hand.transform.position).normalized;
+                Instantiate(bulletPrefab, hand.transform.position, Quaternion.LookRotation(aimDir));
+            }
+            
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
     }
