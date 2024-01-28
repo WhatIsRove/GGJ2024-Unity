@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator NextLevel()
     {
-        crossFade.GetComponent<Animator>().SetTrigger("StartFade");
+        crossFade.GetComponent<Animator>().SetTrigger("FadeOut");
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
