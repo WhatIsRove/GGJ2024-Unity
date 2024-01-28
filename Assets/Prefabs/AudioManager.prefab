@@ -52,17 +52,17 @@ MonoBehaviour:
     rangePitch: 1
     minPitch: 1.05
     maxPitch: 0.95
-    mixer: {fileID: 0}
+    mixer: {fileID: -317057136469669855, guid: 7ef15d0b3d837c547a5386f72f1c6395, type: 2}
     loop: 0
     source: {fileID: 0}
   - name: Honk
     clip: {fileID: 8300000, guid: 78bc6ab908dec4f4ba64996cbd9e9f1d, type: 3}
-    volume: 0.258
+    volume: 0.113
     pitch: 1
     rangePitch: 0
     minPitch: 1.05
     maxPitch: 0.95
-    mixer: {fileID: 0}
+    mixer: {fileID: -317057136469669855, guid: 7ef15d0b3d837c547a5386f72f1c6395, type: 2}
     loop: 0
     source: {fileID: 0}
   - name: Music1
@@ -72,7 +72,7 @@ MonoBehaviour:
     rangePitch: 0
     minPitch: 1.05
     maxPitch: 0.95
-    mixer: {fileID: 0}
+    mixer: {fileID: 8640742740442105473, guid: 7ef15d0b3d837c547a5386f72f1c6395, type: 2}
     loop: 1
     source: {fileID: 0}
   - name: MenuMusic
@@ -82,6 +82,6 @@ MonoBehaviour:
     rangePitch: 0
     minPitch: 1.05
     maxPitch: 0.95
-    mixer: {fileID: 0}
+    mixer: {fileID: 8640742740442105473, guid: 7ef15d0b3d837c547a5386f72f1c6395, type: 2}
     loop: 1
     source: {fileID: 0}

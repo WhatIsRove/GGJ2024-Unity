@@ -11,10 +11,11 @@ public class GameManager : MonoBehaviour
 
     public GameObject pauseMenu;
     public GameObject settingsMenu;
-
+    public GameObject gameOver;
     public GameObject crossFade;
 
-    bool isPaused = false;
+    public bool isPaused = false;
+    public bool gameIsOver = true;
 
     private void Awake()
     {
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
         {
             FindObjectOfType<AudioManager>().Play("MenuMusic");
         }
+        gameIsOver = false;
     }
 
     private void Update()
@@ -41,7 +43,7 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex != 0)
         {
 
-            if (Input.GetKeyDown(KeyCode.Escape) && GameObject.FindGameObjectWithTag("GameOver") == null && !isPaused && SceneManager.GetActiveScene().buildIndex != 0)
+            if (Input.GetKeyDown(KeyCode.Escape) && !gameIsOver && !isPaused && SceneManager.GetActiveScene().buildIndex != 0)
             {
                 Pause();
             }
@@ -58,6 +60,19 @@ public class GameManager : MonoBehaviour
         isPaused = true;
 
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        Time.timeScale = 0f;
+    }
+
+    public void GameOver()
+    {
+        gameOver.SetActive(true);
+        gameIsOver = true;
+
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
         Time.timeScale = 0f;
@@ -72,6 +87,7 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
 

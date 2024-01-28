@@ -84,6 +84,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (currentHP <= 0 && !FindObjectOfType<GameManager>().gameIsOver)
+        {
+            FindObjectOfType<GameManager>().GameOver();
+        }
+
+        if (FindObjectOfType<GameManager>().isPaused || FindObjectOfType<GameManager>().gameIsOver) return;
+
         xViewRotate += mousePos.x * mouseSensitivity;
         yViewRotate -= mousePos.y * mouseSensitivity;
 
@@ -278,11 +285,6 @@ public class PlayerController : MonoBehaviour
         if (currentHP > 0)
         {
             currentHP--;
-        }
-
-        if (currentHP <= 0)
-        {
-            //gameover
         }
     }
 
