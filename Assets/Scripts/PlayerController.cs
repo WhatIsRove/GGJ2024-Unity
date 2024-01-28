@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -64,6 +65,10 @@ public class PlayerController : MonoBehaviour
 
     public bool hasGun;
 
+    public float startingNades;
+    public float currentNades;
+    public TextMeshProUGUI nadeText;
+
     void Start()
     {
         camera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -80,6 +85,8 @@ public class PlayerController : MonoBehaviour
 
         maxRightMask = hpMask.rectTransform.rect.width - hpMask.padding.x - hpMask.padding.z;
         initialRightMask = hpMask.padding.z;
+
+        currentNades = startingNades;
     }
 
     void Update()
@@ -108,12 +115,6 @@ public class PlayerController : MonoBehaviour
 
         if (hasGun)
         {
-            hotbar[0].action.performed += _ => {
-                int tempIndex = hotbarIndex;
-                hotbarIndex = prevHotbarIndex;
-                prevHotbarIndex = tempIndex;
-                SwitchHotbar();
-            };
 
             hotbar[1].action.performed += _ => {
                 if (hotbarIndex != 1)
@@ -123,18 +124,28 @@ public class PlayerController : MonoBehaviour
                     SwitchHotbar();
                 }
             };
-            hotbar[2].action.performed += _ => {
-                if (hotbarIndex != 2)
-                {
-                    prevHotbarIndex = hotbarIndex;
-                    hotbarIndex = 2;
-                    SwitchHotbar();
-                }
-            };
 
-            if (hotbarIndex == 2 && Time.time >= timeToFire - 0.1f)
+            if (currentNades > 0)
             {
-                chicken.SetActive(true);
+                hotbar[0].action.performed += _ => {
+                    int tempIndex = hotbarIndex;
+                    hotbarIndex = prevHotbarIndex;
+                    prevHotbarIndex = tempIndex;
+                    SwitchHotbar();
+                };
+                hotbar[2].action.performed += _ => {
+                    if (hotbarIndex != 2)
+                    {
+                        prevHotbarIndex = hotbarIndex;
+                        hotbarIndex = 2;
+                        SwitchHotbar();
+                    }
+                };
+
+                if (hotbarIndex == 2 && Time.time >= timeToFire - 0.1f)
+                {
+                    chicken.SetActive(true);
+                }
             }
 
             if (isFiring && Time.time >= timeToFire)
@@ -145,11 +156,13 @@ public class PlayerController : MonoBehaviour
                     SpawnBullet();
                     FindObjectOfType<AudioManager>().Play("ConfettiCannon");
                 }
-                else if (hotbarIndex == 2)
+                else if (hotbarIndex == 2 && currentNades > 0)
                 {
                     timeToFire = Time.time + 1f / nadePrefab.GetComponent<Grenade>().fireRate;
                     chicken.SetActive(false);
                     ThrowNade();
+                    currentNades--;
+                    nadeText.SetText(": " + currentNades);
                 }
 
             }
@@ -246,11 +259,14 @@ public class PlayerController : MonoBehaviour
                 chickenCrosshair.SetActive(false);
                 break;
             case 2:
-                gun.SetActive(false);
-                chicken.SetActive(true);
+                if (currentNades > 0)
+                {
+                    gun.SetActive(false);
+                    chicken.SetActive(true);
 
-                gunCrosshair.SetActive(false);
-                chickenCrosshair.SetActive(true);
+                    gunCrosshair.SetActive(false);
+                    chickenCrosshair.SetActive(true);
+                }
                 break;
         }
     }
@@ -286,6 +302,12 @@ public class PlayerController : MonoBehaviour
         {
             currentHP--;
         }
+    }
+
+    public void AddNades()
+    {
+        currentNades++;
+        nadeText.SetText(": " + currentNades);
     }
 
 
