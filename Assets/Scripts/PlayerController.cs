@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -8,7 +9,9 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public float moveAccel = 10f;
+    public float sprintAccel = 20f;
     public float maxSpeed = 50f;
+    public float sprintMaxSpeed = 10f;
     public float mouseSensitivity = 1f;
 
     public Vector2 mouseVerticalRange;
@@ -39,6 +42,9 @@ public class PlayerController : MonoBehaviour
 
     public InputActionReference jumpAction;
     bool isJumping = false;
+
+    public InputActionReference sprintAction;
+    bool isSprinting = false;
 
     public float jumpForce = 10f;
     public float gravity;
@@ -112,6 +118,16 @@ public class PlayerController : MonoBehaviour
         jumpAction.action.performed += _ => { isJumping = true; };
         jumpAction.action.canceled += _ => { isJumping = false; };
 
+        sprintAction.action.performed += _ => { isSprinting = true; };
+        sprintAction.action.canceled += _ => { isSprinting = false; };
+
+        if (isSprinting)
+        {
+            FindObjectOfType<ViewBobbing>().bobSpeed = 11;
+        } else
+        {
+            FindObjectOfType<ViewBobbing>().bobSpeed = 8;
+        }
 
         if (hasGun)
         {
@@ -186,13 +202,26 @@ public class PlayerController : MonoBehaviour
         
         XZmag = new Vector3(velocity.x, 0, velocity.z).magnitude;
 
-        if (XZmag > maxSpeed)
+        if (isSprinting)
         {
-            Vector3 reducedSpeed = rb.velocity;
-            float keepY = reducedSpeed.y;
-            reducedSpeed = Vector3.ClampMagnitude(reducedSpeed, maxSpeed);
-            reducedSpeed.y = keepY;
-            rb.velocity = reducedSpeed;
+            if (XZmag > sprintMaxSpeed)
+            {
+                Vector3 reducedSpeed = rb.velocity;
+                float keepY = reducedSpeed.y;
+                reducedSpeed = Vector3.ClampMagnitude(reducedSpeed, sprintMaxSpeed);
+                reducedSpeed.y = keepY;
+                rb.velocity = reducedSpeed;
+            }
+        } else
+        {
+            if (XZmag > maxSpeed)
+            {
+                Vector3 reducedSpeed = rb.velocity;
+                float keepY = reducedSpeed.y;
+                reducedSpeed = Vector3.ClampMagnitude(reducedSpeed, maxSpeed);
+                reducedSpeed.y = keepY;
+                rb.velocity = reducedSpeed;
+            }
         }
 
         if (moveDir == Vector3.zero)
@@ -207,7 +236,11 @@ public class PlayerController : MonoBehaviour
 
         var normalSpeed = Vector3.Dot(lateralVelocty, moveDir.normalized);
 
-        if (normalSpeed < maxSpeed)
+        if (normalSpeed < sprintMaxSpeed && isSprinting)
+        {
+            normalSpeed += sprintAccel * moveDir.magnitude * Time.fixedDeltaTime;
+            normalSpeed = Mathf.Min(normalSpeed, sprintMaxSpeed);
+        } else if (normalSpeed < maxSpeed && !isSprinting)
         {
             normalSpeed += moveAccel * moveDir.magnitude * Time.fixedDeltaTime;
             normalSpeed = Mathf.Min(normalSpeed, maxSpeed);
