@@ -405,7 +405,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6666766992840157513
 Transform:
   m_ObjectHideFlags: 0
@@ -793,8 +793,10 @@ MonoBehaviour:
   - {fileID: 1097157405055972976, guid: 17ff296f46357764ab77b68e54f6be94, type: 3}
   gun: {fileID: 3827144437090043149}
   chicken: {fileID: 6678775457943962911}
+  gunCrosshair: {fileID: 0}
   maxHP: 20
   hpMask: {fileID: 0}
+  hasGun: 0
 --- !u!54 &5732346502437088559
 Rigidbody:
   m_ObjectHideFlags: 0

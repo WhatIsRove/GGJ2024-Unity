@@ -30,7 +30,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            FindObjectOfType<AudioManager>().Play("MenuMusic");
+        }
     }
 
     private void Update()
@@ -77,6 +80,7 @@ public class GameManager : MonoBehaviour
 
     public void StartNextLevel()
     {
+        FindObjectOfType<AudioManager>().Stop("MenuMusic");
         StartCoroutine(NextLevel());
     }
 

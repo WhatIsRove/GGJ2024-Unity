@@ -65,3 +65,23 @@ MonoBehaviour:
     mixer: {fileID: 0}
     loop: 0
     source: {fileID: 0}
+  - name: Music1
+    clip: {fileID: 8300000, guid: c5a1f543612b1924ca5d59b5b80a9ff5, type: 3}
+    volume: 0.1
+    pitch: 1
+    rangePitch: 0
+    minPitch: 1.05
+    maxPitch: 0.95
+    mixer: {fileID: 0}
+    loop: 1
+    source: {fileID: 0}
+  - name: MenuMusic
+    clip: {fileID: 8300000, guid: 51b6d60ede4d97c4eabfe1a421dbaebb, type: 3}
+    volume: 0.1
+    pitch: 1
+    rangePitch: 0
+    minPitch: 1.05
+    maxPitch: 0.95
+    mixer: {fileID: 0}
+    loop: 1
+    source: {fileID: 0}

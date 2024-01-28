@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
     public GameObject gun;
     public GameObject chicken;
 
-    GameObject gunCrosshair;
+    public GameObject gunCrosshair;
     GameObject chickenCrosshair;
 
     public float maxHP;
@@ -61,6 +61,8 @@ public class PlayerController : MonoBehaviour
 
     float maxRightMask;
     float initialRightMask;
+
+    public bool hasGun;
 
     void Start()
     {
@@ -71,7 +73,9 @@ public class PlayerController : MonoBehaviour
         gunCrosshair = GameObject.FindGameObjectWithTag("CannonCrosshair");
         chickenCrosshair = GameObject.FindGameObjectWithTag("ChickenCrosshair");
 
+        gunCrosshair.SetActive(false);
         chickenCrosshair.SetActive(false);
+
         currentHP = maxHP;
 
         maxRightMask = hpMask.rectTransform.rect.width - hpMask.padding.x - hpMask.padding.z;
@@ -94,48 +98,54 @@ public class PlayerController : MonoBehaviour
         jumpAction.action.performed += _ => { isJumping = true; };
         jumpAction.action.canceled += _ => { isJumping = false; };
 
-        hotbar[0].action.performed += _ => {
-            int tempIndex = hotbarIndex;
-            hotbarIndex = prevHotbarIndex;
-            prevHotbarIndex = tempIndex;
-            SwitchHotbar();
-        };
 
-        hotbar[1].action.performed += _ => { 
-            if (hotbarIndex != 1) {
-                prevHotbarIndex = hotbarIndex;
-                hotbarIndex = 1;
-                SwitchHotbar();
-            }
-        };
-        hotbar[2].action.performed += _ => {
-            if (hotbarIndex != 2)
-            {
-                prevHotbarIndex = hotbarIndex;
-                hotbarIndex = 2;
-                SwitchHotbar();
-            }
-        };
-
-        if (hotbarIndex == 2 && Time.time >= timeToFire - 0.1f)
+        if (hasGun)
         {
-            chicken.SetActive(true);
-        }
+            hotbar[0].action.performed += _ => {
+                int tempIndex = hotbarIndex;
+                hotbarIndex = prevHotbarIndex;
+                prevHotbarIndex = tempIndex;
+                SwitchHotbar();
+            };
 
-        if (isFiring && Time.time >= timeToFire)
-        {
-            if (hotbarIndex == 1)
+            hotbar[1].action.performed += _ => {
+                if (hotbarIndex != 1)
+                {
+                    prevHotbarIndex = hotbarIndex;
+                    hotbarIndex = 1;
+                    SwitchHotbar();
+                }
+            };
+            hotbar[2].action.performed += _ => {
+                if (hotbarIndex != 2)
+                {
+                    prevHotbarIndex = hotbarIndex;
+                    hotbarIndex = 2;
+                    SwitchHotbar();
+                }
+            };
+
+            if (hotbarIndex == 2 && Time.time >= timeToFire - 0.1f)
             {
-                timeToFire = Time.time + 1f / bulletPrefab.GetComponent<Bullet>().fireRate;
-                SpawnBullet();
-                FindObjectOfType<AudioManager>().Play("ConfettiCannon");
-            } else if (hotbarIndex == 2)
-            {
-                timeToFire = Time.time + 1f / nadePrefab.GetComponent<Grenade>().fireRate;
-                chicken.SetActive(false);
-                ThrowNade();
+                chicken.SetActive(true);
             }
-            
+
+            if (isFiring && Time.time >= timeToFire)
+            {
+                if (hotbarIndex == 1)
+                {
+                    timeToFire = Time.time + 1f / bulletPrefab.GetComponent<Bullet>().fireRate;
+                    SpawnBullet();
+                    FindObjectOfType<AudioManager>().Play("ConfettiCannon");
+                }
+                else if (hotbarIndex == 2)
+                {
+                    timeToFire = Time.time + 1f / nadePrefab.GetComponent<Grenade>().fireRate;
+                    chicken.SetActive(false);
+                    ThrowNade();
+                }
+
+            }
         }
 
         if (Physics.Raycast(transform.position, -transform.up, out groundHit, 1.05f, groundLayer))
